@@ -1,0 +1,38 @@
+[
+  {
+    "nume": "Vlad",
+    "postul": "Biolog",
+    "data_angajarii": "30.03.2023",
+    "salariu": 6000
+  },
+  {
+    "nume": "Maria",
+    "postul": "Asistent medical",
+    "data_angajarii": "12.05.2017",
+    "salariu":3000
+  },
+  {
+    "nume": "George",
+    "postul": "Medic primar",
+    "data_angajarii":"27.11.2012",
+    "salariu": 6500
+  },
+  {
+    "nume": "Mihai",
+    "postul": "Director financiar-contabil",
+    "data_angajarii": "08.04.2022",
+    "salariu": 2000
+  },
+  {
+    "nume": "Georgiana",
+    "postul": "Neurolog",
+    "data_angajarii": "10.07.2021",
+    "salariu": 5500
+  },
+  {
+    "nume": "Adrian",
+    "postul": "Sef paznici",
+    "data_angajarii": "20.06.2022",
+    "salariu": 2500
+  }
+]
