@@ -1,14 +1,10 @@
 package Exercitiul1;
 
 import java.io.File;
-import java.io.IOException;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
-import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.stream.Collectors;
@@ -19,8 +15,8 @@ public class Main {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
             File file=new File("src/main/resources/angajati.json");
-            List<Angajat> angajat = mapper.readValue(file, new TypeReference<List<Angajat>>() {});
-            return angajat;
+            return mapper.readValue(file, new TypeReference<>() {
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,109 +41,113 @@ public class Main {
             System.out.println("\nDati optiunea: ");
             op= scan.nextInt();
 
-            switch (op){
-                case 0:
-                    System.out.println("Executie terminata...");
-                    break;
+            switch (op) {
+                case 0 -> System.out.println("Executie terminata...");
 
-                case 1:
+                case 1 -> {
+                    assert angajat != null;
                     angajat.forEach(System.out::println); //folosind referinte
                     System.out.println();
-                    break;
+                }
 
-                case 2:
+                case 2 -> {
+                    assert angajat != null;
                     angajat.stream()
-                            .filter(angajat1 -> angajat1.getSalariu()>2500)
+                            .filter(angajat1 -> angajat1.getSalariu() > 2500)
                             .forEach(System.out::println);
                     System.out.println();
-                    break;
+                }
 
-                case 3:
+                case 3 -> {
                     LocalDate data_curenta = LocalDate.now();
-                    int an_curent=data_curenta.getYear();
-                    List<Angajat> angajati_aprilie=angajat
+                    int an_curent = data_curenta.getYear();
+                    assert angajat != null;
+                    List<Angajat> angajati_aprilie = angajat
                             .stream()
-                            .filter(post->post.getPostul().toLowerCase().contains("sef")||post.getPostul().toLowerCase().contains("director"))
-                            .filter(luna->luna.getData_angajarii().getYear()==an_curent-1&&luna.getData_angajarii().getMonth()== Month.APRIL)
+                            .filter(post -> post.getPostul().toLowerCase().contains("sef") || post.getPostul().toLowerCase().contains("director"))
+                            .filter(luna -> luna.getData_angajarii().getYear() == an_curent - 1 && luna.getData_angajarii().getMonth() == Month.APRIL)
                             .collect(Collectors.toList());
                     System.out.println(angajati_aprilie);
-                    break;
+                }
 
-                case 4:
+                case 4 -> {
+                    assert angajat != null;
                     List<Angajat> salarii = angajat
                             .stream()
-                            .filter(post->!post.getPostul().toLowerCase().contains("sef")&&!post.getPostul().toLowerCase().contains("director"))
-                                    .collect(Collectors.toList());
-                    Collections.sort(salarii, (s1,s2) -> {
+                            .filter(post -> !post.getPostul().toLowerCase().contains("sef") && !post.getPostul().toLowerCase().contains("director"))
+                            .collect(Collectors.toList());
+                    Collections.sort(salarii, (s1, s2) -> {
                         return (int) (s2.getSalariu() - s1.getSalariu());
                     });
-                    salarii.stream()
-                            .forEach(System.out::println);
+                    salarii.forEach(System.out::println);
                     System.out.println();
-                    break;
+                }
 
-                case 5:
+                case 5 -> {
+                    assert angajat != null;
                     List<String> NUME = angajat
                             .stream()
                             .map(num -> num.getNume().toUpperCase())
                             .collect(Collectors.toList());
                     System.out.println(NUME);
                     System.out.println();
-                    break;
+                }
 
-                case 6:
+                case 6 -> {
+                    assert angajat != null;
                     List<Float> salariu = angajat
                             .stream()
                             .map(Angajat::getSalariu)
-                            .filter(sal -> sal <3000)
+                            .filter(sal -> sal < 3000)
                             .collect(Collectors.toList());
-                        System.out.println(salariu);
-                    break;
+                    System.out.println(salariu);
+                }
 
-                case 7:
+                case 7 -> {
+                    assert angajat != null;
                     Optional<Angajat> primul = angajat
                             .stream()
-                            .min(Comparator.comparing(a->a.getData_angajarii().getYear()));
-                        if(primul.isPresent())
-                            System.out.println("Primul angajat: " + primul.get());
-                        else
-                            System.out.println("Nu exista angajati");
-                    break;
+                            .min(Comparator.comparing(a -> a.getData_angajarii().getYear()));
+                    if (primul.isPresent())
+                        System.out.println("Primul angajat: " + primul.get());
+                    else
+                        System.out.println("Nu exista angajati");
+                }
 
-                case 8:
+                case 8 -> {
+                    assert angajat != null;
                     DoubleSummaryStatistics statistica = angajat
-                        .stream()
-                        .collect(Collectors.summarizingDouble(Angajat::getSalariu));
+                            .stream()
+                            .collect(Collectors.summarizingDouble(Angajat::getSalariu));
                     System.out.println("Salariul minim: " + statistica.getMin());
                     System.out.println("Salariul mediu: " + statistica.getAverage());
                     System.out.println("Salariul maxim: " + statistica.getMax());
-                    break;
+                }
 
-                case 9:
+                case 9 -> {
+                    assert angajat != null;
                     Optional<Angajat> Ion = angajat
                             .stream()
-                            .filter(ion->ion.getNume().contains("Ion"))
+                            .filter(ion -> ion.getNume().contains("Ion"))
                             .findAny();
-                    if(Ion.isPresent())
+                    if (Ion.isPresent())
                         System.out.println("Firma are cel putin un Ion");
                     else
                         System.out.println("Firma nu are nici un Ion angajat");
-                    break;
+                }
 
-                case 10:
+                case 10 -> {
                     LocalDate data = LocalDate.now();
-                    int an_trecut = data.getYear()-1;
+                    int an_trecut = data.getYear() - 1;
+                    assert angajat != null;
                     long vara = angajat
                             .stream()
-                            .filter(v->v.getData_angajarii().getYear()==an_trecut&&(v.getData_angajarii().getMonth()==Month.JUNE||
-                                    v.getData_angajarii().getMonth()==Month.JULY||v.getData_angajarii().getMonth()==Month.AUGUST))
+                            .filter(v -> v.getData_angajarii().getYear() == an_trecut && (v.getData_angajarii().getMonth() == Month.JUNE ||
+                                    v.getData_angajarii().getMonth() == Month.JULY || v.getData_angajarii().getMonth() == Month.AUGUST))
                             .count();
                     System.out.println("Numarul persoanelor angajate in vara anului trecut: " + vara);
-                    break;
-
-                default:
-                    System.out.println("Optiunea nu exista!");
-                    break;
+                }
+                default -> System.out.println("Optiunea nu exista!");
             }
         }while(op!=0);
     }

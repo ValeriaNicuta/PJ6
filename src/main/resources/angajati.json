@@ -32,7 +32,13 @@
   {
     "nume": "Adrian",
     "postul": "Sef paznici",
-    "data_angajarii": "20.06.2022",
+    "data_angajarii": "20.04.2022",
     "salariu": 2500
+  },
+  {
+    "nume": "Ion",
+    "postul": "Asistent medical",
+    "data_angajarii": "17.06.2022",
+    "salariu": 3000
   }
 ]
